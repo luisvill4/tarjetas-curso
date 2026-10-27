@@ -1,0 +1,36 @@
+name: Revisar tarjetas
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Revisar nombres y ejecutar main.py
+        run: |
+          python - <<'EOF'
+          import re, sys
+          from pathlib import Path
+          import main
+
+          ok = True
+          for archivo in sorted(Path("estudiantes").iterdir()):
+              if not re.fullmatch(r"[a-z0-9]+(_[a-z0-9]+)+\.py", archivo.name):
+                  print(f"::error file={archivo}::Nombre inválido: usa apellido_nombre.py (minúsculas, sin tildes, sin ñ ni espacios)")
+                  ok = False
+
+          for archivo, mensaje in main.cargar_tarjetas():
+              print(f"{archivo}: {mensaje}")
+              if mensaje.startswith("[error"):
+                  print(f"::error file=estudiantes/{archivo}::{mensaje}")
+                  ok = False
+
+          sys.exit(0 if ok else 1)
+          EOF
