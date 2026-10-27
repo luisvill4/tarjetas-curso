@@ -10,13 +10,13 @@ Proyecto colaborativo de 4° Medio Programación. Cada estudiante agrega **su pr
 4. Sube tu cambio:
 
    ```
-   git add estudiantes/apellido_nombre.py
+   git add estudiantes/tuapellido_tunombre.py
    git commit -m "Agrega tarjeta de Nombre Apellido"
    git pull --rebase
    git push
    ```
 
-   `git pull --rebase` trae las tarjetas que tus compañeros subieron antes que tú. Sin ese paso, `git push` te rechaza.
+   `git pull --rebase` trae las tarjetas que tus compañeros subieron antes que tú. Sin ese paso, `git push` te rechaza ya que hay cambios que tu no tienes en tu equipo.
 
 ## Cómo ejecutar el proyecto
 
